@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SurakshaQR - Safety Profile</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: white; display: flex; justify-content: center; padding: 20px; }
+        .container { width: 100%; max-width: 400px; }
+        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .full { grid-column: span 2; }
+        .btn-call { background: #ef4444; color: white; text-align: center; text-decoration: none; display: block; border-radius: 15px; padding: 15px; font-weight: bold; margin-top: 20px; }
+        h1 { margin: 0; font-size: 24px; }
+        .blood { color: #f87171; font-weight: bold; font-size: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bento-grid">
+            <div class="card full">
+                <p>Emergency Profile</p>
+                <h1 id="userName">Loading...</h1>
+                <p class="blood" id="bloodGroup">--</p>
+            </div>
+            <div class="card">
+                <small>Status</small><br><strong>Verified</strong>
+            </div>
+            <div class="card">
+                <small>Vault</small><br><strong>2 Cards</strong>
+            </div>
+            <a href="#" id="callBtn" class="btn-call full">DIRECT EMERGENCY CALL</a>
+        </div>
+    </div>
+
+    <script>
+        // PASTE YOUR GOOGLE WEB APP URL BELOW BETWEEN THE QUOTES
+        const apiURL = "https://script.google.com/macros/s/AKfycbxx6j-RkwMRs4jxK2V7tfWYH6pO92i7Rba_dM971tscwKdl9HnkMXkmHjEHED6G02G6/exec";
+
+        async function loadData() {
+            const response = await fetch(apiURL);
+            const data = await response.json();
+            const user = data[0]; // Gets the first user from the sheet
+            
+            document.getElementById('userName').innerText = user.Name;
+            document.getElementById('bloodGroup').innerText = "Blood Group: " + user.Blood_Group;
+            document.getElementById('callBtn').href = "tel:" + user.Emergency_Contact_1;
+        }
+        loadData();
+    </script>
+</body>
+</html>
