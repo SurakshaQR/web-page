@@ -1,44 +1,156 @@
-async function loadData() {
-    try {
-        const response = await fetch(apiURL);
-        const data = await response.json();
-        const user = data[0]; 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SurakshaQR - Safety Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --glass: rgba(255, 255, 255, 0.1); 
+            --border: rgba(255, 255, 255, 0.15);
+            --accent: #ff5e5e;
+        }
+        
+        body { 
+            margin: 0; font-family: 'Inter', sans-serif; 
+            background: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=2000') no-repeat center center fixed;
+            background-size: cover; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+        
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: -1; }
+        
+        .container { width: 90%; max-width: 400px; padding: 20px; box-sizing: border-box; }
+        
+        /* Premium Header */
+        .logo { text-align: center; font-weight: 800; font-size: 22px; margin-bottom: 30px; letter-spacing: 2px; text-transform: uppercase; }
+        .logo i { margin-right: 8px; color: var(--accent); }
 
-        document.getElementById('userName').innerText = user.Name;
-        document.getElementById('bloodGroup').innerText = "Blood Group: " + user.Blood_Group;
-        document.getElementById('callBtn').href = "tel:" + user.Emergency_Contact_1;
+        /* Bento Grid Layout */
+        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        .card { 
+            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 28px; padding: 20px; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4); transition: transform 0.3s ease;
+        }
+        .full { grid-column: span 2; }
+        
+        .label { font-size: 11px; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        h1 { margin: 8px 0; font-size: 26px; font-weight: 800; }
+        .blood { color: var(--accent); font-weight: 800; font-size: 20px; }
 
-        // --- SMART SINGLE-COLUMN SOCIAL LOGIC ---
-        const socialContainer = document.querySelector('.social-row');
-        socialContainer.innerHTML = ''; 
+        /* Status & Vault Styling */
+        .status-val { margin-top: 5px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 5px; }
+        .status-val i { color: #4ade80; }
 
-        if (user.Social_Links && user.Social_Links.trim() !== "") {
-            // Split the single column by commas
-            const linksArray = user.Social_Links.split(',');
+        /* Action Buttons */
+        .btn { 
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            text-align: center; text-decoration: none; font-weight: 700; font-size: 15px;
+            padding: 20px; border-radius: 22px; margin-top: 15px; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-call { background: #ef4444; color: white; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3); }
+        .btn-notify { background: #25d366; color: white; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); }
+        .btn:active { transform: scale(0.95); }
 
-            linksArray.forEach(link => {
-                const url = link.trim();
-                let icon = 'fas fa-link'; // Default icon
-                let color = '#fff';
+        /* Professional Social Row */
+        .social-row { display: flex; justify-content: center; gap: 25px; margin-top: 30px; min-height: 40px; }
+        .social-row a { font-size: 24px; color: white; transition: 0.3s; }
+        
+        /* Micro-animations */
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        .loading { animation: pulse 1.5s infinite; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="logo"><i class="fas fa-shield-halved"></i> SurakshaQR</div>
+        
+        <div class="bento-grid">
+            <div class="card full">
+                <div class="label">Emergency Profile</div>
+                <h1 id="userName" class="loading">Fetching...</h1>
+                <div class="blood" id="bloodGroup">--</div>
+            </div>
+            
+            <div class="card">
+                <div class="label">Identity</div>
+                <div class="status-val"><i class="fas fa-check-circle"></i> Verified</div>
+            </div>
+            
+            <div class="card">
+                <div class="label">Vault</div>
+                <div class="status-val"><i class="fas fa-lock"></i> OTP Locked</div>
+            </div>
+            
+            <a href="#" id="callBtn" class="btn btn-call full">
+                <i class="fas fa-phone-alt"></i> DIRECT EMERGENCY CALL
+            </a>
+            
+            <a href="#" id="notifyBtn" class="btn btn-notify full">
+                <i class="fab fa-whatsapp"></i> NOTIFY OWNER (WRONG PARKING)
+            </a>
+        </div>
 
-                // Auto-detect platform from URL
-                if (url.includes('facebook.com')) { icon = 'fab fa-facebook'; color = '#1877F2'; }
-                else if (url.includes('instagram.com')) { icon = 'fab fa-instagram'; color = '#E4405F'; }
-                else if (url.includes('linkedin.com')) { icon = 'fab fa-linkedin'; color = '#0A66C2'; }
-                else if (url.includes('youtube.com') || url.includes('youtu.be')) { icon = 'fab fa-youtube'; color = '#FF0000'; }
+        <div class="social-row" id="socialRow">
+            </div>
+    </div>
 
-                socialContainer.innerHTML += `
-                    <a href="${url}" target="_blank" style="color: white; font-size: 24px; transition: 0.3s;" 
-                       onmouseover="this.style.color='${color}'" 
-                       onmouseout="this.style.color='white'">
-                        <i class="${icon}"></i>
-                    </a>`;
-            });
+    <script>
+        // REPLACE THE URL BELOW WITH YOUR GOOGLE WEB APP URL
+        const apiURL = "https://script.google.com/macros/s/AKfycbxx6j-RkwMRs4jxK2V7tfWYH6pO92i7Rba_dM971tscwKdl9HnkMXkmHjEHED6G02G6/exec";
+
+        async function loadData() {
+            try {
+                const response = await fetch(apiURL);
+                const data = await response.json();
+                const user = data[0]; 
+
+                // Update UI with Data
+                document.getElementById('userName').innerText = user.Name;
+                document.getElementById('userName').classList.remove('loading');
+                document.getElementById('bloodGroup').innerText = "Blood Group: " + user.Blood_Group;
+                document.getElementById('callBtn').href = "tel:" + user.Emergency_Contact_1;
+
+                // Handle Social Links from a single column
+                const socialContainer = document.getElementById('socialRow');
+                socialContainer.innerHTML = ''; 
+
+                if (user.Social_Links && user.Social_Links.trim() !== "") {
+                    const linksArray = user.Social_Links.split(',');
+
+                    linksArray.forEach(link => {
+                        const url = link.trim();
+                        let icon = 'fas fa-link';
+                        let color = '#fff';
+
+                        if (url.includes('facebook.com')) { icon = 'fab fa-facebook'; color = '#1877F2'; }
+                        else if (url.includes('instagram.com')) { icon = 'fab fa-instagram'; color = '#E4405F'; }
+                        else if (url.includes('linkedin.com')) { icon = 'fab fa-linkedin'; color = '#0A66C2'; }
+                        else if (url.includes('youtube.com') || url.includes('youtu.be')) { icon = 'fab fa-youtube'; color = '#FF0000'; }
+
+                        socialContainer.innerHTML += `
+                            <a href="${url}" target="_blank" onmouseover="this.style.color='${color}'" onmouseout="this.style.color='white'">
+                                <i class="${icon}"></i>
+                            </a>`;
+                    });
+                }
+
+                // WhatsApp Notify Logic
+                const msg = `Alert! Your vehicle is wrongly parked. Please check.`;
+                document.getElementById('notifyBtn').href = `https://wa.me/${user.Emergency_Contact_1}?text=${encodeURIComponent(msg)}`;
+
+            } catch (e) {
+                document.getElementById('userName').innerText = "Data Error";
+                console.error("Error loading SurakshaQR data:", e);
+            }
         }
 
-        // WhatsApp Notify Logic
-        const msg = `Alert! Your vehicle is wrongly parked. Please check.`;
-        document.getElementById('notifyBtn').href = `https://wa.me/${user.Emergency_Contact_1}?text=${encodeURIComponent(msg)}`;
-
-    } catch (e) { console.log("Error:", e); }
-}
+        loadData();
+    </script>
+</body>
+</html>
