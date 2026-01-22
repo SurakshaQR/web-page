@@ -9,67 +9,58 @@
         :root { --gold: #FFD700; --bg: #05070a; --glass: rgba(255, 255, 255, 0.05); --border: rgba(255, 255, 255, 0.1); --red: #ff4757; }
         body { margin: 0; font-family: sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; min-height: 100vh; }
         .container { width: 90%; max-width: 400px; padding: 20px; }
-        .card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 15px; backdrop-filter: blur(10px); }
-        .brand { text-align: center; color: var(--gold); font-weight: bold; font-size: 24px; margin: 20px 0; letter-spacing: 2px; }
-        .label { font-size: 11px; opacity: 0.5; text-transform: uppercase; margin-bottom: 5px; }
-        .val { font-size: 26px; font-weight: 800; }
-        .btn-call { display: block; background: var(--red); color: white; padding: 18px; border-radius: 15px; text-decoration: none; text-align: center; font-weight: bold; margin-top: 15px; }
-        .debug-log { font-family: monospace; font-size: 10px; color: #666; margin-top: 20px; word-break: break-all; }
+        .brand { text-align: center; color: var(--gold); font-weight: 800; font-size: 24px; margin: 20px 0; }
+        .card { background: var(--glass); border: 1px solid var(--border); border-radius: 24px; padding: 25px; backdrop-filter: blur(10px); }
+        .val { font-size: 28px; font-weight: 800; margin: 10px 0; }
+        .btn-call { display: block; background: var(--red); color: white; padding: 18px; border-radius: 20px; text-decoration: none; text-align: center; font-weight: bold; margin-top: 20px; }
+        .debug { font-size: 10px; color: #444; margin-top: 30px; text-align: center; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="brand">SURAKSHAQR</div>
-        <div id="ui">
-            <div class="card" style="text-align:center;">
-                <i class="fas fa-circle-notch fa-spin"></i><br><br>Checking Security...
-            </div>
+        <div id="view">
+            <div class="card" style="text-align:center;">Connecting to Database...</div>
         </div>
-        <div id="debug" class="debug-log"></div>
+        <div id="errLog" class="debug"></div>
     </div>
 
     <script>
-        async function start() {
-            const params = new URLSearchParams(window.location.search);
-            const id = params.get('id');
-            const api = "https://script.google.com/macros/s/AKfycbz8eHMOKlzvlNzgxw9noylYAqB0A69v5ArwJEM7DVYZFCv8KHAtE3rvyzkElZOvYj68/exec"; 
+        async function load() {
+            const id = new URLSearchParams(window.location.search).get('id');
+            // !!! UPDATE THIS URL BELOW !!!
+            const scriptUrl = "https://script.google.com/macros/s/AKfycbwCxRygp3RmKVWesgCo_-oRyyqkfsaQ4rhcpTk-0mZ7sUVV9Jzia-f_-EdmHzbRTgXJ/exec"; 
             
             if(!id) {
-                document.getElementById('ui').innerHTML = '<div class="card">No ID detected.</div>';
+                document.getElementById('view').innerHTML = "No ID found in URL.";
                 return;
             }
 
             try {
-                const response = await fetch(`${api}?id=${id}`);
-                const data = await response.json();
-                const ui = document.getElementById('ui');
+                const res = await fetch(`${scriptUrl}?id=${id}`);
+                const data = await res.json();
+                const view = document.getElementById('view');
 
                 if (data.Status === "Active") {
-                    ui.innerHTML = `
+                    view.innerHTML = `
                         <div class="card">
-                            <div class="label">Primary Member</div>
+                            <div style="opacity:0.5; font-size:12px;">NAME</div>
                             <div class="val">${data.Name}</div>
-                            <div style="color:var(--red); font-weight:bold; margin-top:10px;">
+                            <div style="color:var(--red); font-weight:bold;">
                                 <i class="fas fa-tint"></i> BLOOD: ${data.Blood_Group}
                             </div>
                         </div>
-                        <a href="tel:${data.Emergency_Contact_1}" class="btn-call">
-                            <i class="fas fa-phone"></i> EMERGENCY CALL
-                        </a>
+                        <a href="tel:${data.Emergency_Phone}" class="btn-call">EMERGENCY CALL</a>
                     `;
                 } else {
-                    ui.innerHTML = `
-                        <div class="card" style="text-align:center;">
-                            <h3>System Ready</h3>
-                            <p style="opacity:0.6;">Tag is unlinked. Use the app.</p>
-                        </div>`;
-                    document.getElementById('debug').innerText = "Server response: " + JSON.stringify(data);
+                    view.innerHTML = `<div class="card" style="text-align:center;"><h3>System Ready</h3><p>Tag is currently available.</p></div>`;
+                    document.getElementById('errLog').innerText = "Status in Sheet: " + data.Found_Status;
                 }
-            } catch (err) {
-                document.getElementById('ui').innerHTML = '<div class="card">Network Error</div>';
+            } catch (e) {
+                document.getElementById('view').innerHTML = "Network Error. Check Script URL.";
             }
         }
-        start();
+        load();
     </script>
 </body>
 </html>
