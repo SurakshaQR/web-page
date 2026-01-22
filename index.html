@@ -1,45 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SurakshaQR - Premium Safety Portal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;800&display=swap" rel="stylesheet">
-    
-    <style>
-        :root { 
-            --glass: rgba(255, 255, 255, 0.05); 
-            --border: rgba(255, 255, 255, 0.12);
-            --accent: #ff4757;
-            --gold: #FFD700;
-            --bg: #0b0f1a;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SurakshaQR - Premium Safety Portal</title>
 
-        body { 
-            margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: var(--bg); color: white; overflow-x: hidden;
-            background-image: 
-                radial-gradient(at 0% 0%, hsla(253,16%,15%,1) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, hsla(339,49%,20%,1) 0, transparent 50%);
-            display: flex; justify-content: center; min-height: 100vh;
-        }
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;800&display=swap" rel="stylesheet">
 
-        .container { width: 92%; max-width: 420px; padding: 20px 0; }
+  <style>
+    :root {
+      --glass: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.12);
+      --accent: #ff4757;
+      --gold: #FFD700;
+      --bg: #0b0f1a;
+      --green: #2ed573;
+    }
 
-        .header { display: flex; flex-direction: column; align-items: center; padding-top: 10px; margin-bottom: 5px; }
-        .logo-img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 10px; filter: drop-shadow(0 8px 15px rgba(0,0,0,0.5)); border-radius: 50%; }
-        .brand-name { font-weight: 500; font-size: 16px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: baseline; gap: 2px; }
-        .brand-name span { font-weight: 800; font-size: 24px; letter-spacing: 1px; }
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: white;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(at 0% 0%, hsla(253,16%,15%,1) 0, transparent 50%),
+        radial-gradient(at 100% 0%, hsla(339,49%,20%,1) 0, transparent 50%);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
 
-        .trust-badge { font-size: 10px; color: #2ed573; background: rgba(46, 213, 115, 0.1); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(46, 213, 115, 0.2); margin-bottom: 15px; text-transform: uppercase; font-weight: 800; }
+    .container {
+      width: 92%;
+      max-width: 420px;
+      padding: 20px 0;
+    }
 
-        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .card { background: var(--glass); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 24px; padding: 18px; opacity: 0; transform: translateY(20px); animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10px;
+      margin-bottom: 5px;
+    }
 
-        .full { grid-column: span 2; }
-        .label { font-size: 10px; opacity: 0.6; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 5px; color: #94a3b8; }
-        h1 { margin: 0; font-size: 24px; font-weight: 800; }
-        
-        .blood-badge { margin-top: 8px; background: rgba(255, 71, 87, 0.
+    .logo-img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 8px 15px rgba(0,0,0,0.5));
+      border-radius: 50%;
+    }
+
+    .brand-name {
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+    }
+
+    .brand-name span {
+      font-weight: 800;
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+
+    .trust-badge {
+      font-size: 10px;
+      color: var(--green);
+      background: rgba(46, 213, 115, 0.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(46, 213, 115, 0.2);
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 18px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    @keyframes slideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .full { grid-column: span 2; }
+
+    .label {
+      font-size: 10px;
+      opacity: 0.6;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 6px;
+      color: #94a3b8;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .mini {
+      margin-top: 8px;
+      font-size: 13px;
+      opacity: 0.85;
+      line-height: 1.4;
+    }
+
+    .blood-badge {
+      margin-top: 10px;
+      background: rgba(255, 71, 87, 0.15);
+      border: 1px solid rgba(255, 71, 87, 0.25);
+      padding: 6px 14px;
+      border-radius: 14px;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      font-weight: 800;
+      color: #ffb3b9;
+      font-size: 12px;
+      width: fit-content;
+    }
+
+    .btn {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 14px;
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+      user-select: none;
+    }
+
+    .btn:active { transform: scale(0.98); }
+
+    .btn-red {
+      background: rgba(255, 71, 87, 0.14);
+      border: 1px solid rgba(255, 71, 87, 0.35);
+    }
+
+    .btn-green {
+      background: rgba(46, 213, 115, 0.12);
+      border: 1px solid rgba(46, 213, 115, 0.3);
+    }
+
+    .muted {
+      opacity: 0.75;
+      font-size: 12px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .small-link {
+      color: #cbd5e1;
+      word-break: break-all;
+      font-size: 12px;
+      margin-top: 8px;
+      opacity: 0.9;
+    }
+
+    .hide { display: none !important; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="header">
+      <!-- Optional logo -->
+      <img class="logo-img" src="https://i.ibb.co/2kRk1qH/safety.png" alt="SurakshaQR">
+      <div class="brand-name"><span>Suraksha</span>QR</div>
+      <div class="trust-badge"><i class="fa-solid fa-circle-check"></i> Verified Safety Portal</div>
+    </div>
+
+    <div class="bento-grid">
+
+      <!-- Profile card -->
+      <div class="card full" style="animation-delay:0.05s;">
+        <div class="label">Rider Profile</div>
+
+        <h1 id="riderName">Loading...</h1>
+
+        <div class="blood-badge" id="bloodGroupBadge">
+          <i class="fa-solid fa-droplet"></i>
+          <span id="bloodGroupText">--</span>
+        </div>
+
+        <div class="mini" id="riderStatusText">Checking rider status...</div>
+      </div>
+
+      <!-- Emergency contact -->
+      <div class="card full" style="animation-delay:0.1s;">
+        <div class="label">Emergency Contact</div>
+        <a class="btn btn-red" id="callEmergencyBtn" href="#">
+          <i class="fa-solid fa-phone"></i> Call Now
+        </a>
+        <div class="small-link" id="emergencyNumberText">--</div>
+      </div>
+
+      <!-- Social Links -->
+      <div class="card full" style="animation-delay:0.15s;">
+        <div class="label">Social Link</div>
+        <a class="btn btn-green" id="openSocialBtn" href="#" target="_blank">
+          <i class="fa-brands fa-facebook"></i> Open Social Profile
+        </a>
+        <div class="small-link" id="socialLinkText">--</div>
+      </div>
+
+      <!-- Vault Link -->
+      <div class="card full" style="animation-delay:0.2s;">
+        <div class="label">Vault Link (Documents)</div>
+        <a class="btn" id="openVaultBtn" href="#" target="_blank">
+          <i class="fa-solid fa-lock"></i> Open Vault
+        </a>
+        <div class="small-link" id="vaultLinkText">--</div>
+      </div>
+
+      <div class="muted full">
+        Powered by SurakshaQR Database ✅
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ✅ Read ID from URL (QR contains ?id=SQ100)
+    const params = new URLSearchParams(window.location.search);
+    const riderId = params.get("id");
+
+    // ✅ MUST replace with your real Apps Script Web App URL
+    const API_URL = "https://script.google.com/macros/s/AKfycbyDWMyEKP677FWE5DMXq1appl0WBX9nHqu-JvmeAvdTNwhHMFeeukRIN9pzSFi95g5y/exec";
+
+    const riderNameEl = document.getElementById("riderName");
+    const bloodGroupTextEl = document.getElementById("bloodGroupText");
+    const riderStatusTextEl = document.getElementById("riderStatusText");
+
+    const callEmergencyBtn = document.getElementById("callEmergencyBtn");
+    const emergencyNumberText = document.getElementById("emergencyNumberText");
+
+    const openSocialBtn = document.getElementById("openSocialBtn");
+    const socialLinkText = document.getElementById("socialLinkText");
+
+    const openVaultBtn = document.getElementById("openVaultBtn");
+    const vaultLinkText = document.getElementById("vaultLinkText");
+
+    function safeSetLink(btn, txtEl, urlOrPhone, type) {
+      if (!urlOrPhone || urlOrPhone === "null" || urlOrPhone === "undefined") {
+        btn.classList.add("hide");
+        txtEl.innerText = "Not available";
+        return;
+      }
+
+      if (type === "phone") {
+        btn.href = "tel:" + urlOrPhone;
+        txtEl.innerText = urlOrPhone;
+        return;
+      }
+
+      // Link
+      let u = urlOrPhone.trim();
+      if (!u.startsWith("http://") && !u.startsWith("https://")) {
+        u = "https://" + u; // auto fix
+      }
+      btn.href = u;
+      txtEl.innerText = u;
+    }
+
+    if (!riderId) {
+      riderNameEl.innerText = "Invalid QR ❌";
+      riderStatusTextEl.innerText = "No ID found in QR URL.";
+    } else {
+      fetch(`${API_URL}?id=${encodeURIComponent(riderId)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.result === "success") {
+            riderNameEl.innerText = data.name || "Unknown Rider";
+            bloodGroupTextEl.innerText = data.bloodGroup ? ("Blood: " + data.bloodGroup) : "Blood: --";
+            riderStatusTextEl.innerText = data.status ? ("Status: " + data.status) : "Status: --";
+
+            safeSetLink(callEmergencyBtn, emergencyNumberText, data.emergencyContact, "phone");
+            safeSetLink(openSocialBtn, socialLinkText, data.socialLinks, "url");
+            safeSetLink(openVaultBtn, vaultLinkText, data.vaultLink, "url");
+          } else {
+            riderNameEl.innerText = "Profile Not Found ❌";
+            riderStatusTextEl.innerText = "This ID does not exist in database.";
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          riderNameEl.innerText = "Server Error ❌";
+          riderStatusTextEl.innerText = "Apps Script / GitHub connection failed.";
+        });
+    }
+  </script>
+</body>
+</html>
