@@ -3,97 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SurakshaQR - Safety Portal</title>
+    <title>SurakshaQR | Smart Emergency Solutions</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;800&display=swap" rel="stylesheet">
     <style>
-        :root { --glass: rgba(255, 255, 255, 0.05); --border: rgba(255, 255, 255, 0.12); --gold: #FFD700; --bg: #0b0f1a; }
-        body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; min-height: 100vh; background-image: radial-gradient(at 0% 0%, #1a1f2c 0, transparent 50%), radial-gradient(at 100% 0%, #2c1a1a 0, transparent 50%); }
-        .container { width: 92%; max-width: 400px; padding: 20px 0; }
-        .header { text-align: center; margin-bottom: 20px; }
-        .logo-img { width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; border: 2px solid var(--gold); }
-        .brand-name { font-weight: 500; font-size: 18px; color: var(--gold); letter-spacing: 2px; }
-        .brand-name span { font-weight: 800; font-size: 26px; }
-        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 20px; padding: 15px; }
-        .full { grid-column: span 2; }
-        .label { font-size: 10px; opacity: 0.6; text-transform: uppercase; margin-bottom: 5px; }
-        h1 { margin: 0; font-size: 22px; }
-        .blood-badge { background: rgba(255, 71, 87, 0.2); color: #ff4757; padding: 4px 10px; border-radius: 8px; font-weight: 800; font-size: 12px; display: inline-block; margin-top: 5px; }
-        .btn { display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; color: white; font-weight: 800; padding: 15px; border-radius: 15px; margin-top: 10px; font-size: 14px; }
-        .btn-call { background: #ff4757; }
-        .btn-notify { background: #2ed573; }
-        .social-row { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
-        .social-row a { color: white; font-size: 20px; opacity: 0.7; }
+        :root { --gold: #FFD700; --bg: #05070a; --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.08); }
+        body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: white; overflow-x: hidden; background-image: radial-gradient(at 0% 0%, hsla(253,16%,15%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,20%,1) 0, transparent 50%); }
+        
+        .nav { padding: 20px; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; color: var(--gold); }
+        .logo img { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--gold); }
+
+        .hero { text-align: center; padding: 100px 20px; max-width: 800px; margin: 0 auto; }
+        .badge { background: rgba(255, 215, 0, 0.1); color: var(--gold); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; border: 1px solid rgba(255, 215, 0, 0.2); }
+        h1 { font-size: 56px; font-weight: 800; margin: 20px 0; line-height: 1.1; }
+        h1 span { color: var(--gold); }
+        p { font-size: 18px; color: #94a3b8; line-height: 1.6; margin-bottom: 40px; }
+
+        .cta-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 18px 35px; border-radius: 15px; font-weight: 800; text-decoration: none; transition: 0.3s; font-size: 16px; }
+        .btn-primary { background: var(--gold); color: black; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2); }
+        .btn-secondary { background: var(--glass); color: white; border: 1px solid var(--border); backdrop-filter: blur(10px); }
+        .btn:hover { transform: translateY(-5px); }
+
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 50px 20px; max-width: 1200px; margin: 0 auto; }
+        .f-card { background: var(--glass); border: 1px solid var(--border); padding: 30px; border-radius: 30px; backdrop-filter: blur(20px); }
+        .f-card i { font-size: 30px; color: var(--gold); margin-bottom: 20px; }
+        .f-card h3 { margin: 0 0 10px 0; font-size: 22px; }
+        .f-card p { font-size: 15px; margin: 0; }
+
+        @media (max-width: 600px) { h1 { font-size: 36px; } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="logo.png" class="logo-img" alt="Logo">
-            <div class="brand-name">SURAKSHA<span>QR</span></div>
+    <nav class="nav">
+        <div class="logo">
+            <img src="logo.png.png" alt="Logo"> SURAKSHA<span>QR</span>
         </div>
-        <div class="bento-grid">
-            <div class="card full">
-                <div class="label">Primary Member</div>
-                <h1 id="userName">Verifying...</h1>
-                <div id="bloodGroup" class="blood-badge">---</div>
-            </div>
-            <div class="card">
-                <div class="label">Vault</div>
-                <div style="color:var(--gold); font-weight: 800; font-size: 12px;">SECURED</div>
-            </div>
-            <div class="card">
-                <div class="label">Status</div>
-                <div id="statusLabel" style="color:#2ed573; font-weight: 800; font-size: 12px;">ACTIVE</div>
-            </div>
-            <a href="#" id="callBtn" class="btn btn-call full"><i class="fas fa-phone"></i> EMERGENCY CALL</a>
-            <a href="#" id="notifyBtn" class="btn btn-notify full"><i class="fab fa-whatsapp"></i> NOTIFY OWNER</a>
+        <a href="https://wa.me/YOUR_PHONE" class="btn-secondary btn" style="padding: 10px 20px; font-size: 12px;">CONTACT US</a>
+    </nav>
+
+    <section class="hero">
+        <span class="badge">Next-Gen Safety</span>
+        <h1>Protect What Matters With <span>SurakshaQR</span></h1>
+        <p>The world's smartest emergency response system for your vehicle, family, and personal safety. One scan can save a life.</p>
+        
+        <div class="cta-group">
+            <a href="#buy" class="btn btn-primary">GET YOUR QR KIT</a>
+            <a href="#features" class="btn btn-secondary">EXPLORE FEATURES</a>
         </div>
-        <div class="social-row" id="socialLinks"></div>
-    </div>
+    </section>
 
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const userId = urlParams.get('id');
-        // PASTE YOUR NEW DEPLOYMENT URL BELOW
-        const apiURL = "https://script.google.com/macros/s/AKfycbxRtvdrBBTee3cUvEa7j_M5CRpsgxgPz1UKK_7vmC-JLj33Donr0bpLZXL_3zwAneCN/exec";
+    <section class="features" id="features">
+        <div class="f-card">
+            <i class="fas fa-phone-alt"></i>
+            <h3>Instant Emergency Call</h3>
+            <p>Rescuers can contact your family with a single tap without needing your phone unlocked.</p>
+        </div>
+        <div class="f-card">
+            <i class="fas fa-lock"></i>
+            <h3>Break-Glass Vault</h3>
+            <p>Securely store Driving Licenses and Insurance papers, accessible only during emergencies via OTP.</p>
+        </div>
+        <div class="f-card">
+            <i class="fas fa-car-crash"></i>
+            <h3>Wrong Parking Notify</h3>
+            <p>Allow people to notify you instantly if your vehicle is blocking the way or in danger.</p>
+        </div>
+    </section>
 
-        async function loadData() {
-            try {
-                // Fetching with a timestamp to force the latest data from the sheet
-                const response = await fetch(`${apiURL}?id=${userId}&v=${new Date().getTime()}`);
-                const user = await response.json();
-
-                if (user.Status === "Available") {
-                    document.getElementById('userName').innerText = "System Ready";
-                    document.getElementById('statusLabel').innerText = "AVAILABLE";
-                    document.getElementById('statusLabel').style.color = "orange";
-                } else {
-                    document.getElementById('userName').innerText = user.Name || "Not Set";
-                    document.getElementById('bloodGroup').innerText = user.Blood_Group || "N/A";
-                    document.getElementById('callBtn').href = "tel:" + user.Emergency_Contact_1;
-                    
-                    // WhatsApp Logic
-                    const msg = encodeURIComponent("Emergency Alert: I am at your vehicle/location.");
-                    document.getElementById('notifyBtn').href = `https://wa.me/${user.Emergency_Contact_1}?text=${msg}`;
-
-                    // Social Links
-                    const socialDiv = document.getElementById('socialLinks');
-                    if (user.Social_Links) {
-                        user.Social_Links.split(',').forEach(link => {
-                            let icon = 'fas fa-link';
-                            if (link.includes('fb')) icon = 'fab fa-facebook';
-                            if (link.includes('ig')) icon = 'fab fa-instagram';
-                            socialDiv.innerHTML += `<a href="${link.trim()}" target="_blank"><i class="${icon}"></i></a>`;
-                        });
-                    }
-                }
-            } catch (e) {
-                document.getElementById('userName').innerText = "System Ready";
-            }
-        }
-        if(userId) loadData();
-    </script>
+    <footer style="text-align: center; padding: 50px; opacity: 0.5; font-size: 12px;">
+        &copy; 2026 SurakshaQR Technologies. All Rights Reserved.
+    </footer>
 </body>
 </html>
