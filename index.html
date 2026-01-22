@@ -7,49 +7,69 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --gold: #FFD700; --bg: #05070a; --glass: rgba(255, 255, 255, 0.05); --border: rgba(255, 255, 255, 0.1); --red: #ff4757; }
-        body { margin: 0; font-family: sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; }
-        .container { width: 90%; max-width: 400px; padding: 20px; text-align: center; }
-        .card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 15px; text-align: left; backdrop-filter: blur(10px); }
-        .brand { color: var(--gold); font-weight: bold; font-size: 24px; margin: 20px 0; }
-        .label { font-size: 11px; opacity: 0.5; text-transform: uppercase; }
-        .val { font-size: 26px; font-weight: 800; margin: 5px 0; }
-        .btn { display: block; padding: 18px; border-radius: 15px; font-weight: bold; text-decoration: none; margin-top: 10px; text-align: center; }
-        .btn-call { background: var(--red); color: white; }
+        body { margin: 0; font-family: sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; min-height: 100vh; }
+        .container { width: 90%; max-width: 400px; padding: 20px; }
+        .card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 25px; margin-bottom: 15px; backdrop-filter: blur(10px); }
+        .brand { text-align: center; color: var(--gold); font-weight: bold; font-size: 24px; margin: 20px 0; letter-spacing: 2px; }
+        .label { font-size: 11px; opacity: 0.5; text-transform: uppercase; margin-bottom: 5px; }
+        .val { font-size: 26px; font-weight: 800; }
+        .btn-call { display: block; background: var(--red); color: white; padding: 18px; border-radius: 15px; text-decoration: none; text-align: center; font-weight: bold; margin-top: 15px; }
+        .debug-log { font-family: monospace; font-size: 10px; color: #666; margin-top: 20px; word-break: break-all; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="brand">SURAKSHAQR</div>
-        <div id="display">Loading Data...</div>
+        <div id="ui">
+            <div class="card" style="text-align:center;">
+                <i class="fas fa-circle-notch fa-spin"></i><br><br>Checking Security...
+            </div>
+        </div>
+        <div id="debug" class="debug-log"></div>
     </div>
 
     <script>
-        async function load() {
-            const id = new URLSearchParams(window.location.search).get('id');
-            const api = "https://script.google.com/macros/s/AKfycbw2TKGQ4qCRtP32Cw_3jNtTDkIlr9BXAyMgnmoGFzswuLBYBn2zQ0xQUEgPQwxWr7ut/exec"; 
+        async function start() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const api = "https://script.google.com/macros/s/AKfycbz8eHMOKlzvlNzgxw9noylYAqB0A69v5ArwJEM7DVYZFCv8KHAtE3rvyzkElZOvYj68/exec"; 
             
+            if(!id) {
+                document.getElementById('ui').innerHTML = '<div class="card">No ID detected.</div>';
+                return;
+            }
+
             try {
-                const res = await fetch(`${api}?id=${id}`);
-                const data = await res.json();
-                const display = document.getElementById('display');
+                const response = await fetch(`${api}?id=${id}`);
+                const data = await response.json();
+                const ui = document.getElementById('ui');
 
                 if (data.Status === "Active") {
-                    display.innerHTML = `
+                    ui.innerHTML = `
                         <div class="card">
-                            <div class="label">Name</div>
+                            <div class="label">Primary Member</div>
                             <div class="val">${data.Name}</div>
-                            <div style="color:var(--red); font-weight:bold;">Blood: ${data.Blood_Group}</div>
+                            <div style="color:var(--red); font-weight:bold; margin-top:10px;">
+                                <i class="fas fa-tint"></i> BLOOD: ${data.Blood_Group}
+                            </div>
                         </div>
-                        <a href="tel:${data.Emergency_Contact_1}" class="btn btn-call">EMERGENCY CALL</a>
+                        <a href="tel:${data.Emergency_Contact_1}" class="btn-call">
+                            <i class="fas fa-phone"></i> EMERGENCY CALL
+                        </a>
                     `;
                 } else {
-                    display.innerHTML = `<div class="card"><h3>System Ready</h3><p>Status in Sheet: ${data.Actual_Status_Found || 'Not Active'}</p></div>`;
+                    ui.innerHTML = `
+                        <div class="card" style="text-align:center;">
+                            <h3>System Ready</h3>
+                            <p style="opacity:0.6;">Tag is unlinked. Use the app.</p>
+                        </div>`;
+                    document.getElementById('debug').innerText = "Server response: " + JSON.stringify(data);
                 }
-            } catch (e) {
-                document.getElementById('display').innerHTML = "Connection Error";
+            } catch (err) {
+                document.getElementById('ui').innerHTML = '<div class="card">Network Error</div>';
             }
         }
-        load();
+        start();
     </script>
 </body>
 </html>
