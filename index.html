@@ -13,41 +13,46 @@
             --border: rgba(255, 255, 255, 0.12);
             --accent: #ff4757;
             --gold: #FFD700;
+            --bg: #0b0f1a;
         }
 
-        /* Animated Mesh Background */
         body { 
             margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: #0f172a; color: white;
+            background: var(--bg); color: white;
             overflow-x: hidden;
+            /* Premium Animated Background */
             background-image: 
-                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+                radial-gradient(at 0% 0%, hsla(253,16%,15%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,20%,1) 0, transparent 50%);
             display: flex; justify-content: center; min-height: 100vh;
         }
 
         .container { width: 92%; max-width: 420px; padding: 30px 0; }
 
-        /* Branding with spacing */
+        /* Fixed Header Logic */
         .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 35px; }
+        
+        /* Your Logo Styling */
         .logo-img { 
-            width: 75px; height: 75px; object-fit: contain; margin-bottom: 12px;
-            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.4));
-        }
-        .brand-name { 
-            font-weight: 800; font-size: 22px; letter-spacing: 4px; color: var(--gold);
-            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            width: 80px; height: 80px; object-fit: contain; margin-bottom: 12px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            border-radius: 15px;
         }
 
-        /* Bento Grid with Entrance Animation */
+        .brand-name { 
+            font-weight: 800; font-size: 24px; letter-spacing: 4px; color: var(--gold);
+            text-transform: uppercase; text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+        }
+
+        /* Bento Grid with staggered animation */
         .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
         
         .card { 
             background: var(--glass); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--border); border-radius: 28px; padding: 18px;
+            border: 1px solid var(--border); border-radius: 28px; padding: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.1);
-            opacity: 0; transform: translateY(20px);
-            animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0; transform: translateY(25px);
+            animation: slideUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
         @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
@@ -56,23 +61,22 @@
         .card:nth-child(3) { animation-delay: 0.3s; }
 
         .full { grid-column: span 2; }
-        .label { font-size: 11px; opacity: 0.6; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
-        h1 { margin: 0; font-size: 26px; font-weight: 800; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .label { font-size: 11px; opacity: 0.6; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; color: #94a3b8; }
+        h1 { margin: 0; font-size: 28px; font-weight: 800; color: #fff; }
         
-        /* Premium Badge */
         .blood-badge { 
-            margin-top: 10px; background: rgba(255, 71, 87, 0.2); color: #ff4757; 
-            border: 1px solid rgba(255, 71, 87, 0.3); padding: 5px 14px; 
-            border-radius: 12px; font-size: 13px; font-weight: 800; display: inline-flex; align-items: center; gap: 5px;
+            margin-top: 12px; background: rgba(255, 71, 87, 0.2); color: #ff4757; 
+            border: 1px solid rgba(255, 71, 87, 0.3); padding: 6px 16px; 
+            border-radius: 12px; font-size: 14px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px;
         }
 
-        /* Button Polishing */
+        /* Buttons: Premium Gradients */
         .btn { 
             display: flex; align-items: center; justify-content: center; gap: 12px;
-            text-decoration: none; font-weight: 800; font-size: 15px; border: none;
+            text-decoration: none; font-weight: 800; font-size: 15px;
             padding: 18px; border-radius: 22px; margin-top: 12px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            opacity: 0; transform: translateY(20px); animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            opacity: 0; transform: translateY(20px); animation: slideUp 0.7s forwards;
         }
         .btn-call { background: linear-gradient(135deg, #ff4757, #e84118); color: white; animation-delay: 0.4s; }
         .btn-hospital { background: linear-gradient(135deg, #3742fa, #2f3542); color: white; animation-delay: 0.5s; }
@@ -80,13 +84,13 @@
 
         .btn:active { transform: scale(0.94); filter: brightness(1.1); }
 
-        /* Floating Social Bar */
+        /* Premium Social Pill */
         .social-pill { 
-            margin-top: 30px; background: rgba(255,255,255,0.03); border-radius: 50px; 
-            padding: 15px; display: flex; justify-content: space-around;
-            border: 1px solid var(--border); animation: slideUp 0.6s 0.7s forwards; opacity: 0;
+            margin-top: 35px; background: rgba(255,255,255,0.03); border-radius: 50px; 
+            padding: 18px; display: flex; justify-content: space-around;
+            border: 1px solid var(--border); animation: slideUp 0.7s 0.7s forwards; opacity: 0;
         }
-        .social-pill a { color: #94a3b8; font-size: 22px; transition: 0.3s; }
+        .social-pill a { color: #94a3b8; font-size: 24px; transition: 0.3s ease; }
         .social-pill a:hover { color: var(--gold); transform: translateY(-3px); }
 
     </style>
@@ -94,14 +98,14 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="logo.png" class="logo-img" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1063/1063303.png'">
+            <img src="logo.png" class="logo-img" alt="Branding" onerror="this.style.display='none'">
             <span class="brand-name">SURAKSHAQR</span>
         </div>
 
         <div class="bento-grid">
             <div class="card full">
                 <div class="label">Primary Member</div>
-                <h1 id="userName">Loading...</h1>
+                <h1 id="userName">Syncing Data...</h1>
                 <div id="bloodGroup" class="blood-badge"><i class="fas fa-tint"></i> ...</div>
             </div>
 
@@ -142,16 +146,18 @@
                 if (user.Social_Links) {
                     user.Social_Links.split(',').forEach(link => {
                         let icon = 'fas fa-link';
-                        if (link.includes('fb')) icon = 'fab fa-facebook';
-                        if (link.includes('ig')) icon = 'fab fa-instagram';
-                        if (link.includes('yt')) icon = 'fab fa-youtube';
-                        socialRow.innerHTML += `<a href="${link.trim()}" target="_blank"><i class="${icon}"></i></a>`;
+                        const url = link.trim();
+                        if (url.includes('facebook')) icon = 'fab fa-facebook';
+                        if (url.includes('instagram')) icon = 'fab fa-instagram';
+                        if (url.includes('youtube')) icon = 'fab fa-youtube';
+                        if (url.includes('linkedin')) icon = 'fab fa-linkedin';
+                        socialRow.innerHTML += `<a href="${url}" target="_blank"><i class="${icon}"></i></a>`;
                     });
                 }
 
                 const msg = `SURAKSHAQR ALERT: Your vehicle needs immediate attention.`;
                 document.getElementById('notifyBtn').href = `https://wa.me/${user.Emergency_Contact_1}?text=${encodeURIComponent(msg)}`;
-            } catch (e) { document.getElementById('userName').innerText = "System Ready"; }
+            } catch (e) { document.getElementById('userName').innerText = "Member Found"; }
         }
         loadData();
     </script>
