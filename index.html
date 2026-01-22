@@ -3,151 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SurakshaQR - Safety Portal</title>
+    <title>SurakshaQR - Medical Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root { 
             --glass: rgba(255, 255, 255, 0.1); 
             --border: rgba(255, 255, 255, 0.15);
-            --accent: #ff5e5e;
+            --accent: #ff4757;
+            --bg: #0f172a;
+            --gold: #FFD700; /* Golden Yellow for Branding */
         }
         
         body { 
-            margin: 0; font-family: 'Inter', sans-serif; 
-            background: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=2000') no-repeat center center fixed;
-            background-size: cover; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg); color: white;
+            display: flex; justify-content: center; min-height: 100vh;
         }
-        
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: -1; }
-        
-        .container { width: 90%; max-width: 400px; padding: 20px; box-sizing: border-box; }
-        
-        /* Premium Header */
-        .logo { text-align: center; font-weight: 800; font-size: 22px; margin-bottom: 30px; letter-spacing: 2px; text-transform: uppercase; }
-        .logo i { margin-right: 8px; color: var(--accent); }
 
-        /* Bento Grid Layout */
-        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .container { width: 90%; max-width: 400px; padding: 20px 0; }
+
+        /* Premium Header Logic */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 25px;
+        }
+
+        .logo-img { 
+            width: 65px; 
+            height: auto; 
+            margin-bottom: 8px; 
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); 
+            border-radius: 12px;
+        }
+
+        .brand-name { 
+            font-weight: 800; 
+            font-size: 20px; 
+            display: block; 
+            letter-spacing: 2px;
+            color: var(--gold); /* Golden Yellow */
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Bento Grid */
+        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         
         .card { 
             background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border); border-radius: 28px; padding: 20px; 
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4); transition: transform 0.3s ease;
+            border: 1px solid var(--border); border-radius: 24px; padding: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-        .full { grid-column: span 2; }
         
-        .label { font-size: 11px; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-        h1 { margin: 8px 0; font-size: 26px; font-weight: 800; }
-        .blood { color: var(--accent); font-weight: 800; font-size: 20px; }
-
-        /* Status & Vault Styling */
-        .status-val { margin-top: 5px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 5px; }
-        .status-val i { color: #4ade80; }
+        .full { grid-column: span 2; }
+        .label { font-size: 10px; opacity: 0.5; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        h1 { margin: 5px 0; font-size: 22px; font-weight: 800; }
+        .blood-badge { 
+            background: var(--accent); color: white; padding: 4px 12px; 
+            border-radius: 10px; font-size: 12px; font-weight: 800; display: inline-block;
+        }
 
         /* Action Buttons */
         .btn { 
             display: flex; align-items: center; justify-content: center; gap: 10px;
-            text-align: center; text-decoration: none; font-weight: 700; font-size: 15px;
-            padding: 20px; border-radius: 22px; margin-top: 15px; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none; font-weight: 700; font-size: 14px;
+            padding: 16px; border-radius: 18px; margin-top: 10px; transition: 0.3s ease;
         }
-        .btn-call { background: #ef4444; color: white; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3); }
-        .btn-notify { background: #25d366; color: white; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); }
-        .btn:active { transform: scale(0.95); }
-
-        /* Professional Social Row */
-        .social-row { display: flex; justify-content: center; gap: 25px; margin-top: 30px; min-height: 40px; }
-        .social-row a { font-size: 24px; color: white; transition: 0.3s; }
+        .btn-call { background: #ff4757; color: white; }
+        .btn-vault { background: rgba(255,255,255,0.08); color: white; border: 1px dashed var(--border); }
+        .btn-hospital { background: #3742fa; color: white; }
+        .btn-notify { background: #2ed573; color: white; }
         
-        /* Micro-animations */
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
-        .loading { animation: pulse 1.5s infinite; }
+        /* Haptic effect on click */
+        .btn:active { transform: scale(0.96); }
+
+        /* Social Pill */
+        .social-pill { 
+            margin-top: 25px; background: var(--glass); border-radius: 40px; 
+            padding: 12px 20px; display: flex; justify-content: space-around;
+            border: 1px solid var(--border);
+        }
+        .social-pill a { color: white; font-size: 18px; transition: 0.3s; }
+        .social-pill a:hover { color: var(--gold); }
+
+        /* Hidden Blood Buddy Drawer */
+        #buddyDrawer { display: none; padding-top: 15px; }
+        .buddy-item { 
+            background: rgba(255,255,255,0.05); padding: 10px; border-radius: 15px; 
+            margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+        }
     </style>
 </head>
 <body>
-    <div class="overlay"></div>
     <div class="container">
-        <div class="logo"><i class="fas fa-shield-halved"></i> SurakshaQR</div>
-        
+        <div class="header">
+            <img src="logo.png" class="logo-img" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1063/1063303.png'">
+            <span class="brand-name">SURAKSHAQR</span>
+        </div>
+
         <div class="bento-grid">
             <div class="card full">
-                <div class="label">Emergency Profile</div>
-                <h1 id="userName" class="loading">Fetching...</h1>
-                <div class="blood" id="bloodGroup">--</div>
+                <div class="label">Emergency Contact</div>
+                <h1 id="userName">...</h1>
+                <div id="bloodGroup" class="blood-badge">...</div>
             </div>
-            
+
             <div class="card">
-                <div class="label">Identity</div>
-                <div class="status-val"><i class="fas fa-check-circle"></i> Verified</div>
+                <div class="label">Medical Vault</div>
+                <div style="font-size:12px; margin-top:5px;"><i class="fas fa-lock" style="color:#ffa502"></i> Protected</div>
             </div>
-            
+
             <div class="card">
-                <div class="label">Vault</div>
-                <div class="status-val"><i class="fas fa-lock"></i> OTP Locked</div>
+                <div class="label">Verification</div>
+                <div style="font-size:12px; margin-top:5px;"><i class="fas fa-check-circle" style="color:#2ed573"></i> Trusted</div>
             </div>
+
+            <a href="#" id="callBtn" class="btn btn-call full"><i class="fas fa-phone"></i> CALL EMERGENCY CONTACT</a>
             
-            <a href="#" id="callBtn" class="btn btn-call full">
-                <i class="fas fa-phone-alt"></i> DIRECT EMERGENCY CALL
+            <a href="#" id="buddyBtn" class="btn btn-vault full" onclick="toggleBuddies()"><i class="fas fa-hand-holding-medical"></i> VIEW BLOOD BUDDIES</a>
+            
+            <div id="buddyDrawer" class="full">
+                <div class="label">Compatible Donors</div>
+                <div id="buddyList"></div>
+            </div>
+
+            <a href="https://www.google.com/maps/search/hospitals+near+me" target="_blank" class="btn btn-hospital full">
+                <i class="fas fa-map-marker-alt"></i> NEAREST HOSPITAL
             </a>
             
             <a href="#" id="notifyBtn" class="btn btn-notify full">
-                <i class="fab fa-whatsapp"></i> NOTIFY OWNER (WRONG PARKING)
+                <i class="fab fa-whatsapp"></i> NOTIFY OWNER (PARKING)
             </a>
         </div>
 
-        <div class="social-row" id="socialRow">
-            </div>
+        <div class="social-pill" id="socialRow"></div>
     </div>
 
     <script>
-        // REPLACE THE URL BELOW WITH YOUR GOOGLE WEB APP URL
-        const apiURL = "https://script.google.com/macros/s/AKfycby25NM-C9ZT7MO2qDh1Weg401XtC2GOmW-gqwJz3VUZJ7EDXjxOtUH724X7COXGcB8L/exec";
+        // Use the ID from the URL (e.g., ...index.html?id=101)
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id');
+        
+        const apiURL = "https://script.google.com/macros/s/AKfycbw5eCbGYnydWsetb5r_ITpRsJLdp_pxHYPHfy49K6NPxDVqr0i1B-IXbLo5Yl4zNUe5/exec";
 
         async function loadData() {
             try {
-                const response = await fetch(apiURL);
-                const data = await response.json();
-                const user = data[0]; 
+                const res = await fetch(apiURL);
+                const allUsers = await res.json();
+                
+                // Find user by ID, otherwise show the first user
+                const user = allUsers.find(u => u.ID == userId) || allUsers[0];
 
-                // Update UI with Data
                 document.getElementById('userName').innerText = user.Name;
-                document.getElementById('userName').classList.remove('loading');
-                document.getElementById('bloodGroup').innerText = "Blood Group: " + user.Blood_Group;
+                const bg = user.Blood_Group;
+                document.getElementById('bloodGroup').innerText = bg;
                 document.getElementById('callBtn').href = "tel:" + user.Emergency_Contact_1;
+                
+                // Update Blood Buddy Label
+                document.getElementById('buddyBtn').innerHTML = `<i class="fas fa-hand-holding-medical"></i> VIEW ${bg} BUDDIES`;
 
-                // Handle Social Links from a single column
-                const socialContainer = document.getElementById('socialRow');
-                socialContainer.innerHTML = ''; 
-
-                if (user.Social_Links && user.Social_Links.trim() !== "") {
-                    const linksArray = user.Social_Links.split(',');
-
-                    linksArray.forEach(link => {
-                        const url = link.trim();
+                // Handle Social Links
+                const socialRow = document.getElementById('socialRow');
+                if (user.Social_Links) {
+                    user.Social_Links.split(',').forEach(link => {
                         let icon = 'fas fa-link';
-                        let color = '#fff';
-
-                        if (url.includes('facebook.com')) { icon = 'fab fa-facebook'; color = '#1877F2'; }
-                        else if (url.includes('instagram.com')) { icon = 'fab fa-instagram'; color = '#E4405F'; }
-                        else if (url.includes('linkedin.com')) { icon = 'fab fa-linkedin'; color = '#0A66C2'; }
-                        else if (url.includes('youtube.com') || url.includes('youtu.be')) { icon = 'fab fa-youtube'; color = '#FF0000'; }
-
-                        socialContainer.innerHTML += `
-                            <a href="${url}" target="_blank" onmouseover="this.style.color='${color}'" onmouseout="this.style.color='white'">
-                                <i class="${icon}"></i>
-                            </a>`;
+                        if (link.includes('fb') || link.includes('facebook')) icon = 'fab fa-facebook';
+                        if (link.includes('ig') || link.includes('instagram')) icon = 'fab fa-instagram';
+                        if (link.includes('youtube')) icon = 'fab fa-youtube';
+                        if (link.includes('linkedin')) icon = 'fab fa-linkedin';
+                        
+                        socialRow.innerHTML += `<a href="${link.trim()}" target="_blank"><i class="${icon}"></i></a>`;
                     });
                 }
 
-                // WhatsApp Notify Logic
-                const msg = `Alert! Your vehicle is wrongly parked. Please check.`;
+                // WhatsApp Logic
+                const msg = `Attention! Your vehicle linked to SurakshaQR is wrongly parked or needs attention. Please check.`;
                 document.getElementById('notifyBtn').href = `https://wa.me/${user.Emergency_Contact_1}?text=${encodeURIComponent(msg)}`;
 
             } catch (e) {
-                document.getElementById('userName').innerText = "Data Error";
-                console.error("Error loading SurakshaQR data:", e);
+                console.error("Load failed", e);
+                document.getElementById('userName').innerText = "Scan Error";
             }
+        }
+
+        function toggleBuddies() {
+            const drawer = document.getElementById('buddyDrawer');
+            drawer.style.display = drawer.style.display === 'block' ? 'none' : 'block';
+            // Simple placeholder for buddy contact
+            document.getElementById('buddyList').innerHTML = `<div class="buddy-item">Registered Donor <a href="${document.getElementById('callBtn').href}" style="color:#2ed573"><i class="fas fa-phone"></i></a></div>`;
         }
 
         loadData();
