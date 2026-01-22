@@ -3,77 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SurakshaQR | Smart Emergency Solutions</title>
+    <title>SurakshaQR | Emergency Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --gold: #FFD700; --bg: #05070a; --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.08); }
-        body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: white; overflow-x: hidden; background-image: radial-gradient(at 0% 0%, hsla(253,16%,15%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,20%,1) 0, transparent 50%); }
+        :root { 
+            --gold: #FFD700; --bg: #05070a; --glass: rgba(255, 255, 255, 0.03); 
+            --border: rgba(255, 255, 255, 0.1); --accent-red: #ff4757; --accent-green: #2ed573;
+        }
         
-        .nav { padding: 20px; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-        .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; color: var(--gold); }
-        .logo img { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--gold); }
+        body { 
+            margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg); color: white;
+            background-image: radial-gradient(at 0% 0%, hsla(253,16%,15%,1) 0, transparent 50%), 
+                              radial-gradient(at 100% 0%, hsla(339,49%,20%,1) 0, transparent 50%);
+            display: flex; justify-content: center; min-height: 100vh;
+        }
 
-        .hero { text-align: center; padding: 100px 20px; max-width: 800px; margin: 0 auto; }
-        .badge { background: rgba(255, 215, 0, 0.1); color: var(--gold); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; border: 1px solid rgba(255, 215, 0, 0.2); }
-        h1 { font-size: 56px; font-weight: 800; margin: 20px 0; line-height: 1.1; }
-        h1 span { color: var(--gold); }
-        p { font-size: 18px; color: #94a3b8; line-height: 1.6; margin-bottom: 40px; }
+        .container { width: 92%; max-width: 420px; padding: 30px 0; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .logo-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--gold); }
+        .brand { font-size: 24px; font-weight: 800; color: var(--gold); margin-top: 10px; }
 
-        .cta-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        .btn { padding: 18px 35px; border-radius: 15px; font-weight: 800; text-decoration: none; transition: 0.3s; font-size: 16px; }
-        .btn-primary { background: var(--gold); color: black; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2); }
-        .btn-secondary { background: var(--glass); color: white; border: 1px solid var(--border); backdrop-filter: blur(10px); }
-        .btn:hover { transform: translateY(-5px); }
+        /* Bento Box Grid */
+        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card { 
+            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 24px; padding: 20px; 
+            transition: 0.3s ease;
+        }
+        .full { grid-column: span 2; }
+        
+        /* Typography */
+        .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px; opacity: 0.5; margin-bottom: 5px; }
+        .name-val { font-size: 26px; font-weight: 800; }
+        .blood-val { color: var(--accent-red); font-weight: 800; font-size: 14px; margin-top: 5px; }
 
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 50px 20px; max-width: 1200px; margin: 0 auto; }
-        .f-card { background: var(--glass); border: 1px solid var(--border); padding: 30px; border-radius: 30px; backdrop-filter: blur(20px); }
-        .f-card i { font-size: 30px; color: var(--gold); margin-bottom: 20px; }
-        .f-card h3 { margin: 0 0 10px 0; font-size: 22px; }
-        .f-card p { font-size: 15px; margin: 0; }
+        /* Actions */
+        .btn { 
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 16px; border-radius: 20px; font-weight: 800; text-decoration: none; 
+            margin-top: 10px; font-size: 14px; border: none; cursor: pointer; transition: 0.2s;
+        }
+        .btn-call { background: linear-gradient(135deg, var(--accent-red), #ff6b81); color: white; }
+        .btn-notify { background: var(--glass); border: 1px solid var(--border); color: white; }
+        .btn-hosp { background: rgba(255, 255, 255, 0.05); color: var(--gold); border: 1px solid var(--gold); }
 
-        @media (max-width: 600px) { h1 { font-size: 36px; } }
+        /* Social Section */
+        .social-row { 
+            display: flex; justify-content: center; gap: 15px; margin-top: 25px; 
+            padding: 15px; background: var(--glass); border-radius: 40px; border: 1px solid var(--border);
+        }
+        .social-row a { color: white; font-size: 20px; opacity: 0.6; transition: 0.3s; }
+        .social-row a:hover { opacity: 1; color: var(--gold); }
+
+        .shimmer { animation: loading 1.5s infinite; }
+        @keyframes loading { 50% { opacity: 0.5; } }
     </style>
 </head>
 <body>
-    <nav class="nav">
-        <div class="logo">
-            <img src="logo.png.png" alt="Logo"> SURAKSHA<span>QR</span>
+    <div class="container">
+        <div class="header">
+            <img src="logo.png.png" class="logo-img" alt="Logo">
+            <div class="brand">SURAKSHA<span>QR</span></div>
         </div>
-        <a href="https://wa.me/YOUR_PHONE" class="btn-secondary btn" style="padding: 10px 20px; font-size: 12px;">CONTACT US</a>
-    </nav>
 
-    <section class="hero">
-        <span class="badge">Next-Gen Safety</span>
-        <h1>Protect What Matters With <span>SurakshaQR</span></h1>
-        <p>The world's smartest emergency response system for your vehicle, family, and personal safety. One scan can save a life.</p>
+        <div class="bento-grid" id="profileContent">
+            <div class="card full shimmer" style="text-align:center;">
+                <p>Establishing Secure Connection...</p>
+            </div>
+        </div>
         
-        <div class="cta-group">
-            <a href="#buy" class="btn btn-primary">GET YOUR QR KIT</a>
-            <a href="#features" class="btn btn-secondary">EXPLORE FEATURES</a>
-        </div>
-    </section>
+        <div class="social-row" id="socialLinks" style="display:none;"></div>
+    </div>
 
-    <section class="features" id="features">
-        <div class="f-card">
-            <i class="fas fa-phone-alt"></i>
-            <h3>Instant Emergency Call</h3>
-            <p>Rescuers can contact your family with a single tap without needing your phone unlocked.</p>
-        </div>
-        <div class="f-card">
-            <i class="fas fa-lock"></i>
-            <h3>Break-Glass Vault</h3>
-            <p>Securely store Driving Licenses and Insurance papers, accessible only during emergencies via OTP.</p>
-        </div>
-        <div class="f-card">
-            <i class="fas fa-car-crash"></i>
-            <h3>Wrong Parking Notify</h3>
-            <p>Allow people to notify you instantly if your vehicle is blocking the way or in danger.</p>
-        </div>
-    </section>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const qrId = urlParams.get('id');
+        // IMPORTANT: Replace with your actual Web App URL from Apps Script Deployment
+        const apiBase = "https://script.google.com/macros/s/AKfycbx3uMiCAZlS4S_UpohBIzau2BhOzpHsg_-OL-UDLX7gIkZCkossu-MzTa9SqpdIBy8M/exec";
 
-    <footer style="text-align: center; padding: 50px; opacity: 0.5; font-size: 12px;">
-        &copy; 2026 SurakshaQR Technologies. All Rights Reserved.
-    </footer>
+        async function loadProfile() {
+            if(!qrId) return;
+            try {
+                const response = await fetch(`${apiBase}?id=${qrId}`);
+                const data = await response.json();
+                const grid = document.getElementById('profileContent');
+
+                if (data.Status !== "Active") {
+                    grid.innerHTML = `
+                        <div class="card full" style="text-align:center; padding:40px 10px;">
+                            <i class="fas fa-lock-open" style="font-size:40px; color:var(--gold);"></i>
+                            <div class="name-val">New Device</div>
+                            <p style="opacity:0.6;">This QR is not yet registered. Download the SurakshaQR app to set up your profile.</p>
+                            <a href="#" class="btn btn-call">DOWNLOAD APP</a>
+                        </div>`;
+                    return;
+                }
+
+                // Layout for Registered User
+                grid.innerHTML = `
+                    <div class="card full">
+                        <div class="label">Emergency Profile</div>
+                        <div class="name-val">${data.Name}</div>
+                        <div class="blood-val"><i class="fas fa-tint"></i> BLOOD GROUP: ${data.Blood_Group}</div>
+                    </div>
+
+                    <div class="card" onclick="alert('Break-Glass Vault requires Owner OTP.')">
+                        <div class="label">Vault</div>
+                        <div class="val" style="color:var(--gold)"><i class="fas fa-shield-alt"></i> LOCKED</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="label">Identity</div>
+                        <div class="val" style="color:var(--accent-green)"><i class="fas fa-check-circle"></i> VERIFIED</div>
+                    </div>
+
+                    <a href="tel:${data.Contact_Primary}" class="btn btn-call full">
+                        <i class="fas fa-phone-alt"></i> EMERGENCY CALL
+                    </a>
+
+                    <button onclick="alert('Owner Notified!')" class="btn btn-notify full">
+                        <i class="fas fa-car"></i> NOTIFY OWNER (WRONG PARKING)
+                    </button>
+                    
+                    <a href="https://www.google.com/maps/search/hospitals+near+me" target="_blank" class="btn btn-hosp full">
+                        <i class="fas fa-ambulance"></i> NEAREST HOSPITAL
+                    </a>
+                `;
+
+                // Handle Social Status Visibility
+                const socials = [
+                    { link: data.Social_FB, icon: 'fa-facebook' },
+                    { link: data.Social_YT, icon: 'fa-youtube' },
+                    { link: data.Social_IG, icon: 'fa-instagram' },
+                    { link: data.Social_LI, icon: 'fa-linkedin' }
+                ];
+
+                const socialDiv = document.getElementById('socialLinks');
+                let hasSocial = false;
+                socialDiv.innerHTML = '';
+
+                socials.forEach(s => {
+                    if(s.link && s.link.trim() !== "") {
+                        socialDiv.innerHTML += `<a href="${s.link}" target="_blank"><i class="fab ${s.icon}"></i></a>`;
+                        hasSocial = true;
+                    }
+                });
+
+                if(hasSocial) socialDiv.style.display = 'flex';
+
+            } catch (e) { 
+                console.error("Load Error:", e);
+                document.getElementById('profileContent').innerHTML = '<div class="card full">Error loading profile. Please try again.</div>';
+            }
+        }
+
+        loadProfile();
+    </script>
 </body>
 </html>
