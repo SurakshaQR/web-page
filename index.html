@@ -28,7 +28,7 @@
 
         .container { width: 92%; max-width: 420px; padding: 20px 0; }
 
-        /* COMPACT HEADER */
+        /* HEADER & TRUST BADGE */
         .header { 
             display: flex; 
             flex-direction: column; 
@@ -46,10 +46,16 @@
         .brand-name { 
             font-weight: 500; font-size: 16px; letter-spacing: 2px; color: var(--gold);
             text-transform: uppercase; text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            margin-bottom: 15px; display: flex; align-items: baseline; gap: 2px;
+            margin-bottom: 5px; display: flex; align-items: baseline; gap: 2px;
         }
 
         .brand-name span { font-weight: 800; font-size: 24px; letter-spacing: 1px; }
+
+        .trust-badge {
+            font-size: 10px; color: #2ed573; background: rgba(46, 213, 115, 0.1);
+            padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(46, 213, 115, 0.2);
+            margin-bottom: 15px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px;
+        }
 
         /* Bento Grid */
         .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -86,30 +92,28 @@
             opacity: 0; transform: translateY(15px); animation: slideUp 0.6s forwards;
         }
         .btn-call { background: linear-gradient(135deg, #ff4757, #e84118); color: white; animation-delay: 0.4s; }
-        .btn-vault { background: rgba(255,255,255,0.08); border: 1px dashed var(--border); color: white; animation-delay: 0.5s; }
-        .btn-hospital { background: linear-gradient(135deg, #3742fa, #2f3542); color: white; animation-delay: 0.6s; }
-        .btn-notify { background: linear-gradient(135deg, #2ed573, #1e8449); color: white; animation-delay: 0.7s; }
+        .btn-hospital { background: linear-gradient(135deg, #3742fa, #2f3542); color: white; animation-delay: 0.5s; }
+        .btn-notify { background: linear-gradient(135deg, #2ed573, #1e8449); color: white; animation-delay: 0.6s; }
 
-        /* BLOOD BUDDY DRAWER */
-        #buddyDrawer { 
-            display: none; 
-            background: rgba(255,255,255,0.03); 
-            border: 1px solid var(--border); 
-            border-radius: 20px; 
-            padding: 15px; 
-            margin-top: 5px;
-            animation: fadeIn 0.4s ease;
+        /* BRANDING SECTION: Encourages scan-person to visit website */
+        .safety-footer {
+            margin-top: 30px; text-align: center; padding: 20px;
+            background: linear-gradient(180deg, transparent, rgba(255,215,0,0.05));
+            border-radius: 30px; border: 1px solid var(--border);
+            animation: slideUp 0.6s 0.8s forwards; opacity: 0;
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .buddy-item { 
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255,255,255,0.05); padding: 12px; border-radius: 15px; margin-bottom: 8px;
+        .footer-text { font-size: 12px; color: #94a3b8; line-height: 1.6; margin-bottom: 15px; }
+        .web-link { 
+            color: var(--gold); text-decoration: none; font-weight: 800; font-size: 14px;
+            display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--gold);
+            padding: 8px 20px; border-radius: 50px; transition: 0.3s;
         }
+        .web-link:hover { background: var(--gold); color: black; }
 
         .social-pill { 
-            margin-top: 25px; background: rgba(255,255,255,0.03); border-radius: 40px; 
+            margin-top: 20px; background: rgba(255,255,255,0.03); border-radius: 40px; 
             padding: 15px; display: flex; justify-content: space-around;
-            border: 1px solid var(--border); animation: slideUp 0.6s 0.8s forwards; opacity: 0;
+            border: 1px solid var(--border); animation: slideUp 0.6s 0.9s forwards; opacity: 0;
         }
         .social-pill a { color: #94a3b8; font-size: 22px; }
     </style>
@@ -119,6 +123,7 @@
         <div class="header">
             <img src="logo.png" class="logo-img" alt="Logo" onerror="this.style.display='none'">
             <div class="brand-name">SURAKSHA<span>QR</span></div>
+            <div class="trust-badge"><i class="fas fa-check-shield"></i> Official Safety Portal</div>
         </div>
 
         <div class="bento-grid">
@@ -139,17 +144,15 @@
             </div>
 
             <a href="#" id="callBtn" class="btn btn-call full"><i class="fas fa-phone-alt"></i> EMERGENCY CALL</a>
-            
-            <a href="javascript:void(0)" onclick="toggleBuddies()" id="buddyBtn" class="btn btn-vault full"><i class="fas fa-hand-holding-medical"></i> VIEW BUDDIES</a>
-            
-            <div id="buddyDrawer" class="full">
-                <div class="label" style="margin-bottom:10px;">Emergency Donors</div>
-                <div id="buddyList">
-                    </div>
-            </div>
-
             <a href="https://www.google.com/maps/search/hospital+near+me" target="_blank" class="btn btn-hospital full"><i class="fas fa-ambulance"></i> NEARBY HOSPITAL</a>
             <a href="#" id="notifyBtn" class="btn btn-notify full"><i class="fab fa-whatsapp"></i> NOTIFY VEHICLE OWNER</a>
+        </div>
+
+        <div class="safety-footer">
+            <p class="footer-text">Protect your loved ones with SurakshaQR.<br>Smart, instant, and life-saving.</p>
+            <a href="https://surakshaqr.com" class="web-link">
+                VISIT SURAKSHAQR.COM <i class="fas fa-external-link-alt"></i>
+            </a>
         </div>
 
         <div class="social-pill" id="socialRow"></div>
@@ -160,11 +163,6 @@
         const userId = urlParams.get('id');
         const apiURL = "https://script.google.com/macros/s/AKfycbw5eCbGYnydWsetb5r_ITpRsJLdp_pxHYPHfy49K6NPxDVqr0i1B-IXbLo5Yl4zNUe5/exec";
 
-        function toggleBuddies() {
-            const drawer = document.getElementById('buddyDrawer');
-            drawer.style.display = drawer.style.display === 'block' ? 'none' : 'block';
-        }
-
         async function loadData() {
             try {
                 const res = await fetch(apiURL);
@@ -174,9 +172,7 @@
                 document.getElementById('userName').innerText = user.Name;
                 document.getElementById('bloodGroup').innerHTML = `<i class="fas fa-tint"></i> ${user.Blood_Group}`;
                 document.getElementById('callBtn').href = "tel:" + user.Emergency_Contact_1;
-                document.getElementById('buddyBtn').innerHTML = `<i class="fas fa-hand-holding-medical"></i> VIEW ${user.Blood_Group} BUDDIES`;
-
-                // SOCIAL LINKS
+                
                 const socialRow = document.getElementById('socialRow');
                 if (user.Social_Links) {
                     user.Social_Links.split(',').forEach(link => {
@@ -189,25 +185,9 @@
                     });
                 }
 
-                // BLOOD BUDDIES LOGIC
-                // App will save buddies in Sheet as "Name:Number, Name:Number"
-                const buddyList = document.getElementById('buddyList');
-                if (user.Blood_Buddies) {
-                    user.Blood_Buddies.split(',').forEach(buddy => {
-                        const [name, phone] = buddy.split(':');
-                        buddyList.innerHTML += `
-                            <div class="buddy-item">
-                                <span style="font-weight:600; font-size:14px;">${name}</span>
-                                <a href="tel:${phone}" style="color:#2ed573; text-decoration:none;"><i class="fas fa-phone-alt"></i></a>
-                            </div>`;
-                    });
-                } else {
-                    buddyList.innerHTML = `<div style="font-size:12px; opacity:0.5; text-align:center;">No buddies registered yet.</div>`;
-                }
-
                 const msg = `SURAKSHAQR ALERT: Your vehicle needs attention.`;
                 document.getElementById('notifyBtn').href = `https://wa.me/${user.Emergency_Contact_1}?text=${encodeURIComponent(msg)}`;
-            } catch (e) { document.getElementById('userName').innerText = "Member Found"; }
+            } catch (e) { document.getElementById('userName').innerText = "System Ready"; }
         }
         loadData();
     </script>
