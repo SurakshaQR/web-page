@@ -3,64 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SurakshaQR Profile</title>
+    <title>SurakshaQR | Emergency Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --gold: #FFD700; --bg: #05070a; --glass: rgba(255, 255, 255, 0.05); --border: rgba(255, 255, 255, 0.1); --red: #ff4757; }
-        body { margin: 0; font-family: sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; min-height: 100vh; }
-        .container { width: 90%; max-width: 400px; padding: 20px; }
-        .brand { text-align: center; color: var(--gold); font-weight: 800; font-size: 24px; margin: 20px 0; }
-        .card { background: var(--glass); border: 1px solid var(--border); border-radius: 24px; padding: 25px; backdrop-filter: blur(10px); }
-        .val { font-size: 28px; font-weight: 800; margin: 10px 0; }
-        .btn-call { display: block; background: var(--red); color: white; padding: 18px; border-radius: 20px; text-decoration: none; text-align: center; font-weight: bold; margin-top: 20px; }
-        .debug { font-size: 10px; color: #444; margin-top: 30px; text-align: center; }
+        :root { 
+            --gold: #FFD700; --bg: #05070a; --glass: rgba(255, 255, 255, 0.05); 
+            --border: rgba(255, 255, 255, 0.1); --red: #ff4757; --green: #2ed573;
+        }
+        
+        body { 
+            margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg); color: white;
+            background-image: radial-gradient(at 0% 0%, #1a1c2c 0, transparent 50%), 
+                              radial-gradient(at 100% 0%, #0d0e17 0, transparent 50%);
+            display: flex; justify-content: center; min-height: 100vh;
+        }
+
+        .container { width: 92%; max-width: 420px; padding: 30px 0; }
+        .brand { text-align: center; color: var(--gold); font-weight: 800; font-size: 26px; letter-spacing: 2px; margin-bottom: 30px; }
+        
+        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card { 
+            background: var(--glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--border); border-radius: 24px; padding: 20px; transition: 0.3s;
+        }
+        .full { grid-column: span 2; }
+        
+        .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.5; margin-bottom: 8px; }
+        .val { font-size: 26px; font-weight: 800; }
+        .blood-badge { 
+            display: inline-block; background: rgba(255, 71, 87, 0.15); color: var(--red); 
+            padding: 6px 15px; border-radius: 50px; font-weight: 800; font-size: 13px; margin-top: 10px;
+        }
+
+        .btn { 
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 20px; border-radius: 20px; font-weight: 800; text-decoration: none; 
+            margin-top: 15px; border: none; font-size: 16px; cursor: pointer; transition: 0.2s;
+        }
+        .btn-call { background: linear-gradient(135deg, var(--red), #ff6b81); color: white; box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3); }
+        .btn-secondary { background: var(--glass); border: 1px solid var(--border); color: white; }
+
+        .social-row { 
+            display: flex; justify-content: center; gap: 25px; margin-top: 30px; 
+            padding: 15px; background: var(--glass); border-radius: 50px; border: 1px solid var(--border);
+        }
+        .social-row a { color: white; font-size: 22px; opacity: 0.6; transition: 0.3s; }
+        .social-row a:hover { opacity: 1; color: var(--gold); transform: translateY(-3px); }
+
+        .loader { text-align: center; padding: 40px; }
+        .fa-spin { color: var(--gold); font-size: 30px; }
+        .debug-info { font-size: 10px; color: #444; margin-top: 20px; text-align: center; font-family: monospace; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="brand">SURAKSHAQR</div>
-        <div id="view">
-            <div class="card" style="text-align:center;">Connecting to Database...</div>
+        
+        <div id="mainDisplay">
+            <div class="loader">
+                <i class="fas fa-circle-notch fa-spin"></i>
+                <p>Establishing Secure Connection...</p>
+            </div>
         </div>
-        <div id="errLog" class="debug"></div>
+
+        <div class="social-row" id="socialLinks" style="display:none;"></div>
+        <div id="debugBox" class="debug-info"></div>
     </div>
 
     <script>
-        async function load() {
-            const id = new URLSearchParams(window.location.search).get('id');
-            // !!! UPDATE THIS URL BELOW !!!
-            const scriptUrl = "https://script.google.com/macros/s/AKfycbwCxRygp3RmKVWesgCo_-oRyyqkfsaQ4rhcpTk-0mZ7sUVV9Jzia-f_-EdmHzbRTgXJ/exec"; 
+        async function initProfile() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const qrId = urlParams.get('id');
+            const debug = document.getElementById('debugBox');
             
-            if(!id) {
-                document.getElementById('view').innerHTML = "No ID found in URL.";
+            // This URL must match your latest Apps Script Deployment
+            const scriptUrl = "https://script.google.com/macros/s/AKfycbyWLwX_tjApPM1H0kZB-ZS9sf1w5an-MT_4nHsCwaSvvt74OXR41qzDazpJ-3oc7JDF/exec"; 
+
+            if(!qrId) {
+                document.getElementById('mainDisplay').innerHTML = '<div class="card full">Invalid Scan. No ID detected.</div>';
                 return;
             }
 
             try {
-                const res = await fetch(`${scriptUrl}?id=${id}`);
-                const data = await res.json();
-                const view = document.getElementById('view');
+                const response = await fetch(`${scriptUrl}?id=${qrId}`);
+                const data = await response.json();
+                const display = document.getElementById('mainDisplay');
 
                 if (data.Status === "Active") {
-                    view.innerHTML = `
-                        <div class="card">
-                            <div style="opacity:0.5; font-size:12px;">NAME</div>
-                            <div class="val">${data.Name}</div>
-                            <div style="color:var(--red); font-weight:bold;">
-                                <i class="fas fa-tint"></i> BLOOD: ${data.Blood_Group}
+                    display.innerHTML = `
+                        <div class="bento-grid">
+                            <div class="card full">
+                                <div class="label">Emergency Profile</div>
+                                <div class="val">${data.Name}</div>
+                                <div class="blood-badge"><i class="fas fa-tint"></i> BLOOD: ${data.Blood_Group}</div>
+                            </div>
+
+                            <div class="card" onclick="alert('Break-Glass Vault requires Owner OTP')">
+                                <div class="label">Vault</div>
+                                <div style="color:var(--gold); font-weight:800;"><i class="fas fa-lock"></i> LOCKED</div>
+                            </div>
+
+                            <div class="card">
+                                <div class="label">Security</div>
+                                <div style="color:var(--green); font-weight:800;"><i class="fas fa-check-circle"></i> VERIFIED</div>
                             </div>
                         </div>
-                        <a href="tel:${data.Emergency_Phone}" class="btn-call">EMERGENCY CALL</a>
+
+                        <a href="tel:${data.Emergency_Phone}" class="btn btn-call">
+                            <i class="fas fa-phone-alt"></i> EMERGENCY CALL
+                        </a>
+
+                        <button onclick="alert('Owner has been notified of parking issue.')" class="btn btn-secondary full">
+                            <i class="fas fa-car"></i> NOTIFY OWNER (PARKING)
+                        </button>
+
+                        <a href="https://www.google.com/maps/search/hospital+near+me" target="_blank" class="btn btn-secondary full" style="color:var(--gold); border-color:var(--gold);">
+                            <i class="fas fa-hospital"></i> NEAREST HOSPITAL
+                        </a>
                     `;
+
+                    if(data.Social_Links && data.Social_Links.trim() !== "") {
+                        const sRow = document.getElementById('socialLinks');
+                        sRow.style.display = 'flex';
+                        const links = data.Social_Links.split(',');
+                        links.forEach(link => {
+                            let icon = 'fa-link';
+                            let l = link.trim().toLowerCase();
+                            if(l.includes('facebook')) icon = 'fa-facebook';
+                            else if(l.includes('instagram')) icon = 'fa-instagram';
+                            else if(l.includes('youtube')) icon = 'fa-youtube';
+                            else if(l.includes('linkedin')) icon = 'fa-linkedin';
+                            sRow.innerHTML += `<a href="${link.trim()}" target="_blank"><i class="fab ${icon}"></i></a>`;
+                        });
+                    }
                 } else {
-                    view.innerHTML = `<div class="card" style="text-align:center;"><h3>System Ready</h3><p>Tag is currently available.</p></div>`;
-                    document.getElementById('errLog').innerText = "Status in Sheet: " + data.Found_Status;
+                    display.innerHTML = `
+                        <div class="card full" style="text-align:center; padding:50px 20px;">
+                            <i class="fas fa-shield-alt" style="font-size:50px; color:var(--gold); margin-bottom:20px;"></i>
+                            <div class="val">System Ready</div>
+                            <p style="opacity:0.6; margin-top:10px;">This SurakshaQR tag is currently unlinked. Please use the App to activate your profile.</p>
+                        </div>`;
+                    debug.innerText = "Current Status in Sheet: " + (data.Found_Status || "Unknown");
                 }
-            } catch (e) {
-                document.getElementById('view').innerHTML = "Network Error. Check Script URL.";
+            } catch (err) {
+                document.getElementById('mainDisplay').innerHTML = '<div class="card full">Network Error. Check Script URL.</div>';
             }
         }
-        load();
+        initProfile();
     </script>
 </body>
 </html>
