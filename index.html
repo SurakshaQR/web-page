@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SurakshaQR - Premium Medical Portal</title>
+    <title>SurakshaQR - Premium Safety Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;800&display=swap" rel="stylesheet">
     
@@ -18,8 +18,7 @@
 
         body { 
             margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: var(--bg); color: white;
-            overflow-x: hidden;
+            background: var(--bg); color: white; overflow-x: hidden;
             background-image: 
                 radial-gradient(at 0% 0%, hsla(253,16%,15%,1) 0, transparent 50%), 
                 radial-gradient(at 100% 0%, hsla(339,49%,20%,1) 0, transparent 50%);
@@ -28,93 +27,41 @@
 
         .container { width: 92%; max-width: 420px; padding: 20px 0; }
 
-        /* HEADER & TRUST BADGE */
-        .header { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding-top: 10px;
-            margin-bottom: 5px; 
-        }
-        
-        .logo-img { 
-            width: 60px; height: 60px; object-fit: contain; margin-bottom: 5px;
-            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.5));
-            border-radius: 50%;
-        }
-
-        .brand-name { 
-            font-weight: 500; font-size: 16px; letter-spacing: 2px; color: var(--gold);
-            text-transform: uppercase; text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            margin-bottom: 5px; display: flex; align-items: baseline; gap: 2px;
-        }
-
+        /* COMPACT BRANDING */
+        .header { display: flex; flex-direction: column; align-items: center; padding-top: 10px; margin-bottom: 5px; }
+        .logo-img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 5px; filter: drop-shadow(0 8px 15px rgba(0,0,0,0.5)); border-radius: 50%; }
+        .brand-name { font-weight: 500; font-size: 16px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: baseline; gap: 2px; }
         .brand-name span { font-weight: 800; font-size: 24px; letter-spacing: 1px; }
 
-        .trust-badge {
-            font-size: 10px; color: #2ed573; background: rgba(46, 213, 115, 0.1);
-            padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(46, 213, 115, 0.2);
-            margin-bottom: 15px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px;
-        }
+        .trust-badge { font-size: 10px; color: #2ed573; background: rgba(46, 213, 115, 0.1); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(46, 213, 115, 0.2); margin-bottom: 15px; text-transform: uppercase; font-weight: 800; }
 
-        /* Bento Grid */
+        /* BENTO GRID */
         .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        
-        .card { 
-            background: var(--glass); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--border); border-radius: 24px; padding: 18px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.1);
-            opacity: 0; transform: translateY(20px);
-            animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        }
-
+        .card { background: var(--glass); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 24px; padding: 18px; opacity: 0; transform: translateY(20px); animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
 
         .full { grid-column: span 2; }
         .label { font-size: 10px; opacity: 0.6; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 5px; color: #94a3b8; }
-        h1 { margin: 0; font-size: 24px; font-weight: 800; color: #fff; }
+        h1 { margin: 0; font-size: 24px; font-weight: 800; }
         
-        .blood-badge { 
-            margin-top: 8px; background: rgba(255, 71, 87, 0.15); color: #ff4757; 
-            border: 1px solid rgba(255, 71, 87, 0.25); padding: 5px 12px; 
-            border-radius: 10px; font-size: 13px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px;
-        }
+        .blood-badge { margin-top: 8px; background: rgba(255, 71, 87, 0.15); color: #ff4757; border: 1px solid rgba(255, 71, 87, 0.25); padding: 5px 12px; border-radius: 10px; font-size: 13px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; }
 
-        /* Buttons */
-        .btn { 
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            text-decoration: none; font-weight: 800; font-size: 14px;
-            padding: 16px; border-radius: 20px; margin-top: 10px; transition: 0.3s;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            opacity: 0; transform: translateY(15px); animation: slideUp 0.6s forwards;
-        }
+        /* BUTTONS */
+        .btn { display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 14px; padding: 16px; border-radius: 20px; margin-top: 10px; transition: 0.3s; opacity: 0; transform: translateY(15px); animation: slideUp 0.6s forwards; }
         .btn-call { background: linear-gradient(135deg, #ff4757, #e84118); color: white; animation-delay: 0.4s; }
         .btn-hospital { background: linear-gradient(135deg, #3742fa, #2f3542); color: white; animation-delay: 0.5s; }
         .btn-notify { background: linear-gradient(135deg, #2ed573, #1e8449); color: white; animation-delay: 0.6s; }
+        .btn-buddies { background: rgba(255,255,255,0.05); color: #fff; border: 1px dashed #444; animation-delay: 0.7s; }
 
-        /* BRANDING SECTION: Encourages scan-person to visit website */
-        .safety-footer {
-            margin-top: 30px; text-align: center; padding: 20px;
-            background: linear-gradient(180deg, transparent, rgba(255,215,0,0.05));
-            border-radius: 30px; border: 1px solid var(--border);
-            animation: slideUp 0.6s 0.8s forwards; opacity: 0;
-        }
-        .footer-text { font-size: 12px; color: #94a3b8; line-height: 1.6; margin-bottom: 15px; }
-        .web-link { 
-            color: var(--gold); text-decoration: none; font-weight: 800; font-size: 14px;
-            display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--gold);
-            padding: 8px 20px; border-radius: 50px; transition: 0.3s;
-        }
-        .web-link:hover { background: var(--gold); color: black; }
+        /* BLOOD BUDDIES */
+        #buddyDrawer { display: none; margin-top: 10px; background: rgba(255,255,255,0.03); border-radius: 15px; padding: 15px; border: 1px solid var(--border); }
+        .buddy-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 12px; margin-bottom: 5px; }
 
-        .social-pill { 
-            margin-top: 20px; background: rgba(255,255,255,0.03); border-radius: 40px; 
-            padding: 15px; display: flex; justify-content: space-around;
-            border: 1px solid var(--border); animation: slideUp 0.6s 0.9s forwards; opacity: 0;
-        }
+        /* SAFETY FOOTER */
+        .safety-footer { margin-top: 30px; text-align: center; padding: 20px; background: rgba(255,215,0,0.03); border-radius: 30px; border: 1px solid var(--border); opacity: 0; animation: slideUp 0.6s 0.8s forwards; }
+        .web-link { color: var(--gold); text-decoration: none; font-weight: 800; font-size: 14px; border: 1px solid var(--gold); padding: 8px 20px; border-radius: 50px; }
+
+        .social-pill { margin-top: 20px; background: rgba(255,255,255,0.03); border-radius: 40px; padding: 15px; display: flex; justify-content: space-around; border: 1px solid var(--border); opacity: 0; animation: slideUp 0.6s 0.9s forwards; }
         .social-pill a { color: #94a3b8; font-size: 22px; }
     </style>
 </head>
@@ -123,13 +70,13 @@
         <div class="header">
             <img src="logo.png" class="logo-img" alt="Logo" onerror="this.style.display='none'">
             <div class="brand-name">SURAKSHA<span>QR</span></div>
-            <div class="trust-badge"><i class="fas fa-check-shield"></i> Official Safety Portal</div>
+            <div class="trust-badge" id="regStatus"><i class="fas fa-check-shield"></i> Verified Safety Profile</div>
         </div>
 
         <div class="bento-grid">
             <div class="card full">
                 <div class="label">Primary Member</div>
-                <h1 id="userName">Syncing...</h1>
+                <h1 id="userName">Verifying QR...</h1>
                 <div id="bloodGroup" class="blood-badge">...</div>
             </div>
 
@@ -139,20 +86,24 @@
             </div>
 
             <div class="card">
-                <div class="label">Status</div>
-                <div style="font-size:13px; font-weight:800; color:#2ed573"><i class="fas fa-check-circle"></i> VERIFIED</div>
+                <div class="label">Identity Status</div>
+                <div id="statusLabel" style="font-size:13px; font-weight:800; color:#2ed573"><i class="fas fa-check-circle"></i> VERIFIED</div>
             </div>
 
             <a href="#" id="callBtn" class="btn btn-call full"><i class="fas fa-phone-alt"></i> EMERGENCY CALL</a>
+            <a href="javascript:void(0)" onclick="toggleBuddies()" class="btn btn-buddies full" id="buddyBtn"><i class="fas fa-users"></i> VIEW BLOOD BUDDIES</a>
+            
+            <div id="buddyDrawer" class="full">
+                <div id="buddyList"></div>
+            </div>
+
             <a href="https://www.google.com/maps/search/hospital+near+me" target="_blank" class="btn btn-hospital full"><i class="fas fa-ambulance"></i> NEARBY HOSPITAL</a>
             <a href="#" id="notifyBtn" class="btn btn-notify full"><i class="fab fa-whatsapp"></i> NOTIFY VEHICLE OWNER</a>
         </div>
 
         <div class="safety-footer">
-            <p class="footer-text">Protect your loved ones with SurakshaQR.<br>Smart, instant, and life-saving.</p>
-            <a href="https://surakshaqr.com" class="web-link">
-                VISIT SURAKSHAQR.COM <i class="fas fa-external-link-alt"></i>
-            </a>
+            <p style="font-size:12px; color:#94a3b8; margin-bottom: 15px;">Smart Safety for your family & vehicle.</p>
+            <a href="https://surakshaqr.com" class="web-link">GET YOUR SURAKSHAQR <i class="fas fa-external-link-alt"></i></a>
         </div>
 
         <div class="social-pill" id="socialRow"></div>
@@ -160,32 +111,54 @@
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const userId = urlParams.get('id');
-        const apiURL = "https://script.google.com/macros/s/AKfycbw5eCbGYnydWsetb5r_ITpRsJLdp_pxHYPHfy49K6NPxDVqr0i1B-IXbLo5Yl4zNUe5/exec";
+        const userId = urlParams.get('id'); // Batch SQ100 - SQ200
+        const apiURL = "https://script.google.com/macros/s/AKfycbzqWUr9eRAXdZKoOfKdg8-dV2c7M4ehy_v4hCYUtsjNj5rhLaw9akpufxejRygdIUbJ/exec";
+
+        function toggleBuddies() {
+            const d = document.getElementById('buddyDrawer');
+            d.style.display = d.style.display === 'block' ? 'none' : 'block';
+        }
 
         async function loadData() {
             try {
                 const res = await fetch(apiURL);
                 const allUsers = await res.json();
-                const user = allUsers.find(u => u.ID == userId) || allUsers[0];
+                const user = allUsers.find(u => u.ID == userId);
+
+                if (!user || user.Status === "Available") {
+                    document.getElementById('userName').innerText = "QR Not Activated";
+                    document.getElementById('regStatus').innerHTML = "<i class='fas fa-exclamation-circle'></i> New Sticker";
+                    document.getElementById('statusLabel').innerHTML = "<i class='fas fa-clock'></i> INACTIVE";
+                    document.getElementById('statusLabel').style.color = "#ffa502";
+                    return;
+                }
 
                 document.getElementById('userName').innerText = user.Name;
                 document.getElementById('bloodGroup').innerHTML = `<i class="fas fa-tint"></i> ${user.Blood_Group}`;
                 document.getElementById('callBtn').href = "tel:" + user.Emergency_Contact_1;
-                
+
                 const socialRow = document.getElementById('socialRow');
                 if (user.Social_Links) {
                     user.Social_Links.split(',').forEach(link => {
                         let icon = 'fas fa-link';
                         const url = link.trim();
-                        if (url.includes('facebook')) icon = 'fab fa-facebook';
-                        if (url.includes('instagram')) icon = 'fab fa-instagram';
-                        if (url.includes('youtube')) icon = 'fab fa-youtube';
+                        if (url.includes('fb')) icon = 'fab fa-facebook';
+                        if (url.includes('ig')) icon = 'fab fa-instagram';
+                        if (url.includes('yt')) icon = 'fab fa-youtube';
+                        if (url.includes('ln')) icon = 'fab fa-linkedin';
                         socialRow.innerHTML += `<a href="${url}" target="_blank"><i class="${icon}"></i></a>`;
                     });
                 }
 
-                const msg = `SURAKSHAQR ALERT: Your vehicle needs attention.`;
+                const buddyList = document.getElementById('buddyList');
+                if (user.Blood_Buddies) {
+                    user.Blood_Buddies.split(',').forEach(b => {
+                        const [name, phone] = b.split(':');
+                        buddyList.innerHTML += `<div class="buddy-item"><span>${name}</span><a href="tel:${phone}" style="color:#2ed573;"><i class="fas fa-phone-alt"></i></a></div>`;
+                    });
+                }
+
+                const msg = `SURAKSHAQR ALERT: Please check your vehicle.`;
                 document.getElementById('notifyBtn').href = `https://wa.me/${user.Emergency_Contact_1}?text=${encodeURIComponent(msg)}`;
             } catch (e) { document.getElementById('userName').innerText = "System Ready"; }
         }
