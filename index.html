@@ -28,7 +28,7 @@
 
         .container { width: 92%; max-width: 420px; padding: 20px 0; }
 
-        /* COMPACT HEADER: Tightened to save space */
+        /* COMPACT HEADER: Tightened to remove wasted space */
         .header { 
             display: flex; 
             flex-direction: column; 
@@ -41,22 +41,32 @@
             width: 60px; 
             height: 60px; 
             object-fit: contain; 
-            margin-bottom: 2px;
+            margin-bottom: 5px;
             filter: drop-shadow(0 8px 15px rgba(0,0,0,0.5));
-            border-radius: 50%; /* Matches your circular logo */
+            border-radius: 50%;
         }
 
+        /* BRAND TYPOGRAPHY: "QR" size is bigger than "SURAKSHA" */
         .brand-name { 
-            font-weight: 800; 
-            font-size: 18px; 
-            letter-spacing: 3px; 
+            font-weight: 500; 
+            font-size: 16px; 
+            letter-spacing: 2px; 
             color: var(--gold);
             text-transform: uppercase; 
             text-shadow: 0 4px 10px rgba(0,0,0,0.5);
             margin-bottom: 15px;
+            display: flex;
+            align-items: baseline; 
+            gap: 2px;
         }
 
-        /* Bento Grid */
+        .brand-name span {
+            font-weight: 800; 
+            font-size: 24px;  
+            letter-spacing: 1px;
+        }
+
+        /* Bento Grid with entrance animations */
         .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         
         .card { 
@@ -82,7 +92,7 @@
             border-radius: 10px; font-size: 13px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px;
         }
 
-        /* Buttons */
+        /* Buttons: Premium Gradients */
         .btn { 
             display: flex; align-items: center; justify-content: center; gap: 10px;
             text-decoration: none; font-weight: 800; font-size: 14px;
@@ -110,8 +120,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="logo.png" class="logo-img" alt="Branding" onerror="this.style.display='none'">
-            <span class="brand-name">SURAKSHAQR</span>
+            <img src="logo.png" class="logo-img" alt="Logo" onerror="this.style.display='none'">
+            <div class="brand-name">SURAKSHA<span>QR</span></div>
         </div>
 
         <div class="bento-grid">
@@ -140,6 +150,7 @@
     </div>
 
     <script>
+        // Data integration logic
         const urlParams = new URLSearchParams(window.location.search);
         const userId = urlParams.get('id');
         const apiURL = "https://script.google.com/macros/s/AKfycbw5eCbGYnydWsetb5r_ITpRsJLdp_pxHYPHfy49K6NPxDVqr0i1B-IXbLo5Yl4zNUe5/exec";
